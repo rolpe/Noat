@@ -88,19 +88,45 @@ class NotesViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    func loadItems() {
+    func loadItems(with request: NSFetchRequest<Note> = Note.fetchRequest(), predicate: NSPredicate? = nil) {
         
-        let request: NSFetchRequest<Note> = Note.fetchRequest()
+        request.predicate = predicate
         
         do {
             noteArray = try context.fetch(request)
         } catch {
             print("Error fetching data: \(error)")
         }
+        tableView.reloadData()
     }
     
     
+}
+
+//MARK - Search Bar Methods
+
+extension NotesViewController: UISearchBarDelegate {
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let request: NSFetchRequest<Note> = Note.fetchRequest()
+        
+        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        
+        if searchBar.text?.count != 0 {
+            loadItems(with: request, predicate: predicate)
+        } else {
+            loadItems()
+        }
+    }
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadItems()
+        } else {
+        searchBarSearchButtonClicked(searchBar)
+        }
+    }
     
 }
+
