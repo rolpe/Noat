@@ -16,7 +16,7 @@ class NotesViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        loadItems()
     }
     
     //MARK - TableView Data Source Methods
@@ -35,6 +35,21 @@ class NotesViewController: UITableViewController {
     
     
     //MARK - TableView Delegate Methods
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+            context.delete(noteArray[indexPath.row])
+            noteArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            saveItems()
+            
+        }
+    }
     
     
     
@@ -47,8 +62,9 @@ class NotesViewController: UITableViewController {
         let action = UIAlertAction(title: "Add Note", style: .default) { (action) in
             let NewNote = Note(context: self.context)
             NewNote.title = textField.text
+            NewNote.text = ""
             self.noteArray.append(NewNote)
-            self.tableView.reloadData()
+            self.saveItems()
         }
         
         alert.addTextField { (alertTextField) in
@@ -61,5 +77,30 @@ class NotesViewController: UITableViewController {
     }
     
     //MARK - Data Manipulation Methods
+    
+    func saveItems() {
+        do {
+            try context.save()
+        } catch {
+            print("Error saving context: \(error)")
+        }
+        
+        tableView.reloadData()
+    }
+    
+    func loadItems() {
+        
+        let request: NSFetchRequest<Note> = Note.fetchRequest()
+        
+        do {
+            noteArray = try context.fetch(request)
+        } catch {
+            print("Error fetching data: \(error)")
+        }
+    }
+    
+    
+    
+    
     
 }
