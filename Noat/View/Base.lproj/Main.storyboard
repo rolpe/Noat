@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -47,10 +48,53 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="p0Y-QT-7iS" kind="show" identifier="goToNoteText" id="8qi-Hh-Ovm"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Go6-k1-rLT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1184.8" y="148.87556221889056"/>
+            <point key="canvasLocation" x="981" y="149"/>
+        </scene>
+        <!--Title-->
+        <scene sceneID="F0G-YW-cWk">
+            <objects>
+                <viewController id="p0Y-QT-7iS" customClass="TextViewController" customModule="Noat" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nfG-aT-BV2">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="BzY-uC-weN">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="BzY-uC-weN" firstAttribute="trailing" secondItem="AGE-0V-wKL" secondAttribute="trailing" id="Bjk-JK-A3J"/>
+                            <constraint firstItem="BzY-uC-weN" firstAttribute="top" secondItem="AGE-0V-wKL" secondAttribute="top" id="ZHB-bK-juM"/>
+                            <constraint firstItem="BzY-uC-weN" firstAttribute="leading" secondItem="AGE-0V-wKL" secondAttribute="leading" id="ij1-Zw-dQC"/>
+                            <constraint firstItem="BzY-uC-weN" firstAttribute="bottom" secondItem="AGE-0V-wKL" secondAttribute="bottom" id="kJ0-i5-sWb"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="AGE-0V-wKL"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Title" id="Amh-te-7Ct">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="hEp-s7-tBL">
+                            <connections>
+                                <action selector="doneButtonPressed:" destination="p0Y-QT-7iS" id="BhX-uN-AW1"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="navTitle" destination="Amh-te-7Ct" id="ss4-uL-NOe"/>
+                        <outlet property="noteText" destination="BzY-uC-weN" id="oMQ-em-7id"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SsO-PB-IS5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1495" y="149"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="LhJ-VF-AYC">

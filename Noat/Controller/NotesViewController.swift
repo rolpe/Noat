@@ -33,11 +33,8 @@ class NotesViewController: UITableViewController {
         return noteArray.count
     }
     
-    
+
     //MARK - TableView Delegate Methods
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -48,6 +45,19 @@ class NotesViewController: UITableViewController {
             
             saveItems()
             
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "goToNoteText", sender: self)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! TextViewController
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
+            destinationVC.note = noteArray[indexPath.row]
         }
     }
     
